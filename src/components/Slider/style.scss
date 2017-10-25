@@ -1,8 +1,18 @@
 .slider-wrapper {
   overflow: hidden;
 }
-.slider-container{
+.slider-container {
   padding: 0 60px;
   overflow-x: visible;
   white-space: nowrap;
+}
+.slider-content {
+  &.content-slide {
+    &-enter {
+      transition: transform 5s;
+    }
+    &-enter-active {
+      transform: translateX(-100%);
+    }
+  }
 }
