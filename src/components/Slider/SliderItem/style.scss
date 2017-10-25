@@ -1,0 +1,21 @@
+.slider-item {
+  width: (100% / 2);
+  display: inline-block;
+  border: 1px solid #fff;
+}
+
+@media (min-width: 480px) {
+  .slider-item {
+    width: (100% / 3);
+  }
+}
+@media (min-width: 1024px) {
+  .slider-item {
+    width: (100% / 4);
+  }
+}
+@media (min-width: 1400px) {
+  .slider-item {
+    width: (100% / 6);
+  }
+}

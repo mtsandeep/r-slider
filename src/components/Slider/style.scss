@@ -1,4 +1,8 @@
 .slider-wrapper {
-  width: 100%;
+  overflow: hidden;
+}
+.slider-container{
   padding: 0 60px;
+  overflow-x: visible;
+  white-space: nowrap;
 }

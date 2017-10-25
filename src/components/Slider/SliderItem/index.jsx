@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './style.scss';
+
 const SliderItem = ({ item }) =>
   (
     <div className="slider-item">
@@ -9,7 +11,7 @@ const SliderItem = ({ item }) =>
   );
 
 SliderItem.propTypes = {
-  item: PropTypes.objectof(PropTypes.any).isRequired,
+  item: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default SliderItem;

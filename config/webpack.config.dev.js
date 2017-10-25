@@ -116,6 +116,7 @@ module.exports = {
       core: path.resolve(__dirname, '../src/core'),
       store: path.resolve(__dirname, '../src/store'),
       assets: path.resolve(__dirname, '../src/assets'),
+      public: path.resolve(__dirname, '../public'),
     },
   },
 };

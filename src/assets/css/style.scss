@@ -1,4 +1,10 @@
 @import '~normalize-css/normalize.css';
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 body {
   font-family: sans-serif;
   background: #141414;
@@ -7,7 +13,7 @@ body {
 a {
   color:#fff;
   text-decoration: none;
-  
+
   &:hover {
     border-bottom: 1px dashed #fff;
   }

@@ -29,7 +29,7 @@ class Hotels extends Component {
         <h1><a href="hotels/bali" title="View all hotels in Bali">Hotels in Bali</a></h1>
         <Slider
           count={this.state.hotels.length}
-          hotels={this.state.hotels}
+          items={this.state.hotels}
         />
       </section>
     );
