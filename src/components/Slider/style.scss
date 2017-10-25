@@ -9,7 +9,7 @@
 .slider-content {
   &.content-slide {
     &-enter {
-      transition: transform 5s;
+      transition: transform 2s;
     }
     &-enter-active {
       transform: translateX(-100%);

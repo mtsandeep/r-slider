@@ -53,16 +53,37 @@ class Slider extends Component {
     return nextSlide;
   }
 
+  appendLastItem = (currentSlide, left = true) => {
+    const { items } = this.props;
+    const { itemsPerSlide } = this.state;
+    const chunks = _.chunk(items, itemsPerSlide);
+    const previousItems = currentSlide === 0 ? _.last(chunks) : chunks[currentSlide - 1];
+    const nextItems = currentSlide === chunks.length - 1
+      ? _.first(chunks)
+      : chunks[currentSlide + 1];
+    let lastItem;
+    if (left) {
+      lastItem = _.first(nextItems);
+    } else {
+      lastItem = _.first(previousItems);
+    }
+    return lastItem;
+  }
+
   slideLeft = () => {
+    const { slided, currentSlide, left, items } = this.state;
+    const nextSlide = this.getNextSlide(currentSlide, left);
     this.setState({
       slide: true,
+      left: true,
+      items: slided ? _.concat(items, this.appendLastItem(nextSlide, left)) : items,
     });
   }
 
   slideRight = () => {
     this.setState({
       slide: true,
-      items: this.getItems(false),
+      left: false,
     });
   }
 
@@ -78,7 +99,6 @@ class Slider extends Component {
 
   handleEntered = () => {
     const { currentSlide } = this.state;
-    console.log(this.getItems(currentSlide));
     this.setState({
       slide: false,
       slided: true,
@@ -99,7 +119,7 @@ class Slider extends Component {
           </div>
           <CSSTransition
             classNames="content-slide"
-            timeout={{ enter: 5000, exit: 0 }}
+            timeout={{ enter: 2000, exit: 0 }}
             in={this.state.slide}
             onEntering={this.handleEntering}
             onEntered={this.handleEntered}
