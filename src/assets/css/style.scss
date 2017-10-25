@@ -1,0 +1,14 @@
+@import '~normalize-css/normalize.css';
+body {
+  font-family: sans-serif;
+  background: #141414;
+  color: #fff;
+}
+a {
+  color:#fff;
+  text-decoration: none;
+  
+  &:hover {
+    border-bottom: 1px dashed #fff;
+  }
+}
