@@ -81,9 +81,12 @@ class Slider extends Component {
   }
 
   slideRight = () => {
+    const { slided, currentSlide, left, items } = this.state;
+    const nextSlide = this.getNextSlide(currentSlide, left);
     this.setState({
       slide: true,
-      left: false,
+      left: true,
+      items: slided ? _.concat(items, this.appendLastItem(nextSlide, left)) : items,
     });
   }
 
@@ -91,6 +94,7 @@ class Slider extends Component {
     const { left, slided, currentSlide } = this.state;
     this.setState({
       currentSlide: this.getNextSlide(currentSlide, left),
+      slided: true,
       contentStyle: {
         transform: slided ? 'translateX(-200%)' : 'translateX(-100%)',
       },
@@ -101,7 +105,6 @@ class Slider extends Component {
     const { currentSlide } = this.state;
     this.setState({
       slide: false,
-      slided: true,
       items: this.getItems(currentSlide),
       contentStyle: {
         transform: 'translateX(-100%)',
@@ -183,13 +186,9 @@ class Slider extends Component {
   }
 
   render() {
-    const { count } = this.props;
     return (
       <div className="slider-wrapper">
         <div className="slider-container">
-          <div className="slider-count">
-            {count > 0 ? count : null}
-          </div>
           <CSSTransition
             classNames="content-slide"
             timeout={{ enter: 2000, exit: 0 }}
@@ -212,8 +211,8 @@ class Slider extends Component {
             </div>
           </CSSTransition>
           <div className="slider-controls">
-            <button onClick={this.slideRight}>previous</button>
-            <button onClick={this.slideLeft}>next</button>
+            { this.state.slided && <div className="previous"><button onClick={this.slideRight}>previous</button></div> }
+            <div className="next"><button onClick={this.slideLeft}>next</button></div>
           </div>
         </div>
       </div>
@@ -222,7 +221,6 @@ class Slider extends Component {
 }
 
 Slider.propTypes = {
-  count: PropTypes.number.isRequired,
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 

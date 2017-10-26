@@ -4,6 +4,13 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 class SliderItem extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      activeItem: false,
+    };
+  }
+
   handleMouseEnter = () => {
     const { onMouseEnter, item } = this.props;
     onMouseEnter(item);
@@ -15,10 +22,14 @@ class SliderItem extends Component {
   }
 
   handleClick = () => {
+    this.setState({
+      activeItem: true,
+    });
   }
 
   render() {
     const { item, style } = this.props;
+    const { activeItem } = this.state;
     return (
       <div
         className="slider-item"
@@ -31,6 +42,9 @@ class SliderItem extends Component {
       >
         <div className="title"><h2>{item.name}</h2></div>
         <div className="item-image" style={{ background: `url(/public/images/hotels/${item.images[0]}) no-repeat` }} />
+        { activeItem &&
+          <div className="active-border" />
+        }
       </div>
     );
   }
