@@ -109,6 +109,79 @@ class Slider extends Component {
     });
   }
 
+  handleMouseEnter = (currentItem) => {
+    const { items, itemsPerSlide } = this.state;
+    const currentItemIndex = _.findIndex(items, { id: currentItem.id });
+    const preItems = _.slice(items, 0, currentItemIndex);
+    const postItems = _.slice(items, currentItemIndex + 1, items.length);
+
+    let preItemsStyle;
+    let postItemsStyle;
+    let currentItemStyle;
+    if (currentItemIndex % itemsPerSlide === 0) {
+      preItemsStyle = { transform: 'translate3d(0,0,0)' };
+      postItemsStyle = { transform: 'translate3d(50%,0,0)' };
+      currentItemStyle = { transform: 'scale(1.5)', transformOrigin: 'left center' };
+    } else if (currentItemIndex % itemsPerSlide === itemsPerSlide - 1) {
+      preItemsStyle = { transform: 'translate3d(-50%,0,0)' };
+      postItemsStyle = { transform: 'translate3d(0,0,0)' };
+      currentItemStyle = { transform: 'scale(1.5)', transformOrigin: 'right center' };
+    } else {
+      preItemsStyle = { transform: 'translate3d(-25%,0,0)' };
+      postItemsStyle = { transform: 'translate3d(25%,0,0)' };
+      currentItemStyle = { transform: 'scale(1.5)', transformOrigin: 'center center' };
+    }
+    const newItems = _.concat(
+      preItems.map(preItem =>
+        ({ ...preItem, itemStyle: { ...preItemsStyle } }),
+      ),
+      [{ ...items[currentItemIndex], itemStyle: { ...currentItemStyle } }],
+      postItems.map(postItem =>
+        ({ ...postItem, itemStyle: { ...postItemsStyle } }),
+      ),
+    );
+    this.setState({
+      items: newItems,
+    });
+  }
+
+
+  handleMouseLeave = (currentItem) => {
+    const { items, itemsPerSlide } = this.state;
+    const currentItemIndex = _.findIndex(items, { id: currentItem.id });
+    const preItems = _.slice(items, 0, currentItemIndex);
+    const postItems = _.slice(items, currentItemIndex + 1, items.length);
+
+    let preItemsStyle;
+    let postItemsStyle;
+    let currentItemStyle;
+    if (currentItemIndex % itemsPerSlide === 0) {
+      preItemsStyle = { transform: 'translate3d(0,0,0)' };
+      postItemsStyle = { transform: 'translate3d(0,0,0)' };
+      currentItemStyle = { transform: 'scale(1)', transformOrigin: 'left center' };
+    } else if (currentItemIndex % itemsPerSlide === itemsPerSlide - 1) {
+      preItemsStyle = { transform: 'translate3d(0,0,0)' };
+      postItemsStyle = { transform: 'translate3d(0,0,0)' };
+      currentItemStyle = { transform: 'scale(1)', transformOrigin: 'right center' };
+    } else {
+      preItemsStyle = { transform: 'translate3d(0,0,0)' };
+      postItemsStyle = { transform: 'translate3d(0,0,0)' };
+      currentItemStyle = { transform: 'scale(1)', transformOrigin: 'center center' };
+    }
+    const newItems = _.concat(
+      preItems.map(preItem =>
+        ({ ...preItem, itemStyle: { ...preItemsStyle } }),
+      ),
+      [{ ...items[currentItemIndex], itemStyle: { ...currentItemStyle } }],
+      postItems.map(postItem =>
+        ({ ...postItem, itemStyle: { ...postItemsStyle } }),
+      ),
+    );
+    this.setState({
+      items: newItems,
+    });
+  }
+
   render() {
     const { count } = this.props;
     return (
@@ -127,7 +200,13 @@ class Slider extends Component {
             <div className="slider-content" style={this.state.contentStyle}>
               {this.state.items.map(item =>
                 (
-                  <SliderItem key={item.id} item={item} />
+                  <SliderItem
+                    style={item.itemStyle}
+                    key={item.id}
+                    item={item}
+                    onMouseEnter={this.handleMouseEnter}
+                    onMouseLeave={this.handleMouseLeave}
+                  />
                 ),
               )}
             </div>
