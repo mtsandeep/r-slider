@@ -11,6 +11,12 @@ class SliderItem extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      activeItem: nextProps.active,
+    });
+  }
+
   handleMouseEnter = () => {
     const { onMouseEnter, item } = this.props;
     onMouseEnter(item);
@@ -22,9 +28,8 @@ class SliderItem extends Component {
   }
 
   handleClick = () => {
-    this.setState({
-      activeItem: true,
-    });
+    const { onClick, item } = this.props;
+    onClick(item);
   }
 
   render() {
@@ -59,6 +64,8 @@ SliderItem.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  active: PropTypes.bool.isRequired,
 };
 
 export default SliderItem;

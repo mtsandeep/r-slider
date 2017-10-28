@@ -185,19 +185,26 @@ class Slider extends Component {
     });
   }
 
+  handleClick = (item) => {
+    this.setState({
+      activeItem: item.id,
+    });
+  }
+
   render() {
+    const { items, slide, contentStyle, activeItem } = this.state;
     return (
       <div className="slider-wrapper">
         <div className="slider-container">
           <CSSTransition
             classNames="content-slide"
             timeout={{ enter: 2000, exit: 0 }}
-            in={this.state.slide}
+            in={slide}
             onEntering={this.handleEntering}
             onEntered={this.handleEntered}
           >
-            <div className="slider-content" style={this.state.contentStyle}>
-              {this.state.items.map(item =>
+            <div className="slider-content" style={contentStyle}>
+              {items.map(item =>
                 (
                   <SliderItem
                     style={item.itemStyle}
@@ -205,6 +212,8 @@ class Slider extends Component {
                     item={item}
                     onMouseEnter={this.handleMouseEnter}
                     onMouseLeave={this.handleMouseLeave}
+                    onClick={this.handleClick}
+                    active={item.id === activeItem}
                   />
                 ),
               )}
