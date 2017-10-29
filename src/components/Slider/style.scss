@@ -9,12 +9,20 @@
 }
 .slider-content {
   margin: 0 0 40px;
-  &.content-slide {
+  &.content-slide-left {
     &-enter {
       transition: transform 2s;
     }
     &-enter-active {
-      transform: translateX(-100%);
+      transform: translateX(-200%);
+    }
+  }
+  &.content-slide-right {
+    &-enter {
+      transition: transform 2s;
+    }
+    &-enter-active {
+      transform: translateX(0%);
     }
   }
 }

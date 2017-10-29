@@ -65,39 +65,54 @@ class Slider extends Component {
     if (left) {
       lastItem = _.first(nextItems);
     } else {
-      lastItem = _.first(previousItems);
+      lastItem = _.last(previousItems);
     }
     return lastItem;
   }
 
   slideLeft = () => {
-    const { slided, currentSlide, left, items } = this.state;
+    const { slided, currentSlide, items } = this.state;
+    const left = true;
     const nextSlide = this.getNextSlide(currentSlide, left);
     this.setState({
       slide: true,
-      left: true,
+      left,
       items: slided ? _.concat(items, this.appendLastItem(nextSlide, left)) : items,
     });
   }
 
   slideRight = () => {
-    const { slided, currentSlide, left, items } = this.state;
+    const { slided, currentSlide, items } = this.state;
+    const left = false;
     const nextSlide = this.getNextSlide(currentSlide, left);
+    const lastItem = this.appendLastItem(nextSlide, left);
+    console.log(lastItem);
+    const prevLastItem = [
+      {
+        ...lastItem,
+        itemWrapperStyle: { position: 'absolute', transform: 'translateX(-100%)', transitionDuration: '0s' },
+      },
+    ];
+    console.log(prevLastItem);
     this.setState({
       slide: true,
-      left: true,
-      items: slided ? _.concat(items, this.appendLastItem(nextSlide, left)) : items,
+      left,
+      items: slided ? _.concat(prevLastItem, items) : items,
     });
   }
 
   handleEntering = () => {
     const { left, slided, currentSlide } = this.state;
+    let contentStyle = {};
+    if (left && !slided) {
+      contentStyle = {
+        transform: 'translateX(-100%)',
+      };
+    }
     this.setState({
       currentSlide: this.getNextSlide(currentSlide, left),
       slided: true,
-      contentStyle: {
-        transform: slided ? 'translateX(-200%)' : 'translateX(-100%)',
-      },
+      contentStyle,
     });
   }
 
@@ -192,12 +207,13 @@ class Slider extends Component {
   }
 
   render() {
-    const { items, slide, contentStyle, activeItem } = this.state;
+    const { items, slide, contentStyle, activeItem, left } = this.state;
+    const contentSlideDirection = left ? 'content-slide-left' : 'content-slide-right';
     return (
       <div className="slider-wrapper">
         <div className="slider-container">
           <CSSTransition
-            classNames="content-slide"
+            classNames={contentSlideDirection}
             timeout={{ enter: 2000, exit: 0 }}
             in={slide}
             onEntering={this.handleEntering}
@@ -208,6 +224,7 @@ class Slider extends Component {
                 (
                   <SliderItem
                     style={item.itemStyle}
+                    wrapperStyle={item.itemWrapperStyle}
                     key={item.id}
                     item={item}
                     onMouseEnter={this.handleMouseEnter}

@@ -33,23 +33,28 @@ class SliderItem extends Component {
   }
 
   render() {
-    const { item, style } = this.props;
+    const { item, style, wrapperStyle } = this.props;
     const { activeItem } = this.state;
     return (
       <div
-        className="slider-item"
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        onClick={this.handleClick}
-        style={style}
-        role="button"
-        tabIndex="0"
+        className="slider-item-wrapper"
+        style={wrapperStyle}
       >
-        <div className="title"><h2>{item.name}</h2></div>
-        <div className="item-image" style={{ background: `url(/public/images/hotels/${item.images[0]}) no-repeat` }} />
-        { activeItem &&
-          <div className="active-border" />
-        }
+        <div
+          className="slider-item"
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+          onClick={this.handleClick}
+          style={style}
+          role="button"
+          tabIndex="0"
+        >
+          <div className="title"><h2>{item.name}</h2></div>
+          <div className="item-image" style={{ background: `url(/public/images/hotels/${item.images[0]}) no-repeat` }} />
+          { activeItem &&
+            <div className="active-border" />
+          }
+        </div>
       </div>
     );
   }
@@ -57,11 +62,13 @@ class SliderItem extends Component {
 
 SliderItem.defaultProps = {
   style: {},
+  wrapperStyle: {},
 };
 
 SliderItem.propTypes = {
   item: PropTypes.objectOf(PropTypes.any).isRequired,
   style: PropTypes.objectOf(PropTypes.any),
+  wrapperStyle: PropTypes.objectOf(PropTypes.any),
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
