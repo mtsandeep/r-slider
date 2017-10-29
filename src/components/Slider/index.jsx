@@ -86,14 +86,12 @@ class Slider extends Component {
     const left = false;
     const nextSlide = this.getNextSlide(currentSlide, left);
     const lastItem = this.appendLastItem(nextSlide, left);
-    console.log(lastItem);
     const prevLastItem = [
       {
         ...lastItem,
         itemWrapperStyle: { position: 'absolute', transform: 'translateX(-100%)', transitionDuration: '0s' },
       },
     ];
-    console.log(prevLastItem);
     this.setState({
       slide: true,
       left,
